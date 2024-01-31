@@ -1,0 +1,6 @@
+.nav-link:hover,.dropdown-item:hover{
+    color: red !important;
+}
+.navbar{
+    font-size: larger;
+}

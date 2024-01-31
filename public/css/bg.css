@@ -1,0 +1,7 @@
+.container-fluid,#leaderboardDiv,html,body{
+    background-image: url(../assets/black_space.jpg) !important;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}

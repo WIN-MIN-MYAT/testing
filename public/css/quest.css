@@ -1,0 +1,7 @@
+.card:hover{
+    /* filter: blur(0.5px);    */
+    color: red;
+    font-size: large;
+    transition: 0.3s;
+    cursor: pointer;
+}
