@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const gold = document.getElementById("gold");
     const created_on = document.getElementById("created_on");
     const email = document.getElementById("email");
+    const hp = document.getElementById("hp");
+    const dmg = document.getElementById("dmg");
 
     characterName.innerText = responseData.character_name
     character_id.innerText = responseData.character_id
@@ -22,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
     gold.innerText = responseData.gold
     created_on.innerText = responseData.created_on
     email.innerText = responseData.email
+    hp.innerText = responseData.hp
+    dmg.innerText = responseData.dmg
 
   };
 
@@ -75,17 +79,18 @@ document.addEventListener("DOMContentLoaded", function () {
       respondText.classList.add("text-bg-success")
       respondText.classList.remove("text-bg-danger")
       respondText.innerText = "✅ Character Name Updated Successfully";
+      fetchMethod(currentUrl + `/api/characters/${characterId}`, callbackForcharacterInfo);
+      fetchMethod(currentUrl + `/api/characters/${characterId}/quest`, questLinkcallback);
       setTimeout(() => {
         respondText.classList.add("d-none");  // Hide the element after 2 second
-        window.location.reload() 
-      }, 1500);
+      }, 2000);
     } else {
       respondText.classList.remove("text-bg-success")
       respondText.classList.add("text-bg-danger")
       respondText.innerText = `❌ ${responseData.message}`;
       setTimeout(() => {
         respondText.classList.add("d-none");  // Hide the element after 2 second
-      }, 2000);
+      }, 1500);
     }
     
 

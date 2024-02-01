@@ -256,7 +256,7 @@ module.exports.createNewCharacter = (req, res, next) => {
         if (error) {
             res.status(500).json({ message: "Internal server error" })
         } else {
-            res.locals.newCharacterId = results.insertId
+            res.locals.character_id = results.insertId
             next()
         }
     }
@@ -264,7 +264,7 @@ module.exports.createNewCharacter = (req, res, next) => {
 }
 
 module.exports.addItemsToNewCharacter = (req, res, next) => {
-    const data = { character_id: res.locals.newCharacterId };
+    const data = { character_id: res.locals.character_id };
     const callback = (error, results, fields) => {
         if (error) {
             res.status(500).json({ message: "Internal server error" })

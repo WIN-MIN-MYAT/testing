@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", function () {
 const callback = (responseStatus, responseData) => {
     console.log("responseStatus:", responseStatus);
     console.log("responseData:", responseData);
@@ -32,4 +33,4 @@ const callback = (responseStatus, responseData) => {
     });
 };
 
-fetchMethod(currentUrl + "/api/quests", callback);
+fetchMethod(currentUrl + "/api/quests", callback);})

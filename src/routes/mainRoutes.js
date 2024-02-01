@@ -8,6 +8,9 @@ router.use("/users",userRoutes);
 router.use("/tasks",taskRoutes);
 router.use('/task_progress',taskProgressRoutes)
 
+const messageRoutes=require("./messageRoutes")
+router.use("/messages",messageRoutes)
+
 
 const itemRoutes=require('./itemRoutes');
 router.use("/items",itemRoutes);

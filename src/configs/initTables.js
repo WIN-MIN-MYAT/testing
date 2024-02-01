@@ -5,7 +5,14 @@ const SQLSTATEMENT=`
         DROP TABLE IF EXISTS Inventory; 
         DROP TABLE IF EXISTS Character_progression;
         DROP TABLE IF EXISTS Item;
+        DROP TABLE IF EXISTS Message;
         DROP TABLE IF EXISTS Quest;
+        CREATE TABLE Message(
+            message_id INT PRIMARY KEY AUTO_INCREMENT,
+            message TEXT,
+            character_id INT NOT NULL,
+            created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
         CREATE TABLE Item(
             item_id INT PRIMARY KEY AUTO_INCREMENT,
             item_name TEXT NOT NULL,

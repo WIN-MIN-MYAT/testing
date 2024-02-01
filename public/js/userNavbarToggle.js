@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const inventoryButton = document.getElementById("inventoryButton");
-    const shopButton = document.getElementById("shopButton");
+    const globalChat = document.getElementById("globalChat");
     const registerButton = document.getElementById("registerButton");
     const profileButton = document.getElementById("profileButton");
     const logoutButton = document.getElementById("logoutButton");
@@ -12,17 +12,17 @@ document.addEventListener("DOMContentLoaded", function () {
       inventoryButton.classList.remove("d-none");
       registerButton.classList.add("d-none");
       profileButton.classList.remove("d-none");
-      logoutButton.classList.remove("d-none");
-      shopButton.classList.remove("d-none");
       loginButton.classList.add("d-none");
+      globalChat.classList.remove("d-none");
+      logoutButton.classList.remove("d-none");
       
     } else {
       inventoryButton.classList.add("d-none");
       registerButton.classList.remove("d-none");
+      globalChat.classList.add("d-none");
       profileButton.classList.add("d-none");
       logoutButton.classList.add("d-none");
       loginButton.classList.remove("d-none");
-      shopButton.classList.add("d-none");
 
     }
   

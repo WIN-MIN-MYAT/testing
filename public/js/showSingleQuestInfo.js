@@ -33,7 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
           questLink.setAttribute("href",`quest-action.html?quest_id=${questId}`)
         }
         else{
-          respondText.classList.remove("d-none");  
+          respondText.classList.remove("d-none"); 
+          respondText.innerText="You need to log in to do quest!" 
           setTimeout(() => {
             respondText.classList.add("d-none");  // Hide the element after 2 second
           }, 2000);
