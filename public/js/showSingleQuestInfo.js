@@ -51,6 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("responseStatus:", responseStatus);
     console.log("responseData:", responseData);
     if(responseStatus==401){
+      localStorage.removeItem("token");
+      localStorage.removeItem("characterId");
       respondText.classList.remove("d-none");
       respondText.innerText = "Your token is expired.Please login back."
       setTimeout(() => {

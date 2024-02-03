@@ -147,7 +147,6 @@ module.exports.getDataForbattlefield = (req, res, next) => {
 
             if (hpA <= 0) {
                 res.locals.creature_name=results[1][0].creature_name
-                console.log(results) 
                 res.status(200).json({message:`
                 The creature ${results[1][0].creature_name} has appeared!\n
                 The battle between two of you started!\n
