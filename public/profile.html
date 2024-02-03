@@ -9,6 +9,7 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
     <link href="css/color.css" rel="stylesheet" />
     <link href="css/bg.css" rel="stylesheet" />
+    <link href="css/tableScroll.css" rel="stylesheet" />
 
 </head>
 
@@ -73,16 +74,16 @@
                 <form class="form-inline d-none" id="editForm" >
                     <div class="form-group mr-2 d-flex justify-content-center">
                       <input type="text" class="form-control w-25" placeholder="Enter New Name" id="character_name1" required>
-                    </div>
+                    </div> 
                     <button type="submit" class="btn btn-primary my-2">Submit</button>
                   </form>
             </div>
             <div class="container d-flex justify-content-center w-50"> <h4 class="text-bg-success p-2 rounded d-none" id="respondText"></h3></div>
         </div>
         <div class="container mt-4  ">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="bg-dark text-white p-3 rounded-2 border border-white">
+            <div class="row mb-2">
+                <div class="col-lg-5">
+                    <div class="bg-dark text-white p-2 rounded-2 border border-white">
                         <h2 class="text-center">About</h3>
                             <ul class="my-1">
                                 <li class="my-4">Email - <span id="email"></span></li>
@@ -96,7 +97,7 @@
                             </ul>
                     </div>
                 </div>
-                <div class="col-lg-6 mt-2 mt-lg-0">
+                <div class="col-lg-7 mt-2 mt-lg-0">
                     <h2 class="text-center text-white">Quests Log</h3>
                         <h5 id="nooneFinished" class="text-center text-bg-light">No quest has been finished by this character.</h5>
                         <table class="table  d-none"id="questTable">

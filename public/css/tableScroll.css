@@ -1,4 +1,8 @@
 .col-lg-6{
     overflow-y: auto;
-    height: 21.5em;
+    height: 25rem;
+}
+.col-lg-7{
+    overflow-y: auto;
+    height: 26rem;
 }

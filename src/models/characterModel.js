@@ -83,17 +83,6 @@ module.exports.showInventory=(data,callback)=>{
     pool.query(SQLSTATEMENT,VALUES,callback);
 }
 
-module.exports.showCompletedQuest=(data,callback)=>{
-    const SQLSTATEMENT=`
-    SELECT Quest.*
-    FROM Quest_completed
-    INNER JOIN Quest ON Quest_completed.quest_id = Quest.quest_id
-    WHERE Quest_completed.character_id = ?;
-    `;
-    const VALUES=[data.character_id];
-    pool.query(SQLSTATEMENT,VALUES,callback);
-}
-
 module.exports.checkuserIdAndPoints=(data,callback)=>{
     const SQLSTATEMENT=`
     SELECT * FROM User where user_id=?;

@@ -33,8 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 displayItem.innerHTML = `
           <div class="container-fluid d-flex justify-content-end align-items-center px-2 mt-2">
             <div class="w-auto">
-              <p class="text-end editButton me-2 mb-2 ">
-                <span class="btn p-0" >
+              <p class="text-end  me-2 mb-2 ">
+                <span class="btn p-0 editButton" >
                   <img src="../assets/pen.png" width="20" height="20" alt="" data-messageId="${message.message_id}">
                 </span>
                 <span  class="deleteButton p-0 mx-2 btn">
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
             fetchMethod(currentUrl + "/api/messages/" + editingMessageId, callbackForSubmit, "PUT", data, token);
             editingMessageId = null;
             document.getElementById("newMessage").value = "Type Message Here"
-            submitButton.innerText = "Submit";
+            submitButton.innerText = "Send";
             fetchMethod(currentUrl + "/api/messages", callback);
         }
         else {
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
             fetchMethod(currentUrl + "/api/messages", callbackForSubmit, "POST", data, token);
             document.getElementById("newMessage").value = ""
-            submitButton.innerText = "Submit";
+            submitButton.innerText = "Send";
             fetchMethod(currentUrl + "/api/messages", callback);
         }
 

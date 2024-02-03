@@ -1,9 +1,10 @@
 const model = require('../models/characterModel');
 
+//rank characters by level
 module.exports.rankCharacterByLevel = (req, res, next) => {
     const callback = (error, results, fields) => {
         if (error) {
-            res.status(500).json(error);
+            res.status(500).json({ message: "Internal Server Error" });
         } else {
             if (results.length == 0) res.status(404).end()
             else {
@@ -14,6 +15,7 @@ module.exports.rankCharacterByLevel = (req, res, next) => {
     model.rankCharacterByLevel(callback)
 }
 
+//show quests completed by a character
 module.exports.showQuestByCharacterId = (req, res, next) => {
     const data = { character_id: req.params.character_id }
     const callback = (error, results, fields) => {
@@ -32,18 +34,15 @@ module.exports.showQuestByCharacterId = (req, res, next) => {
     model.showQuestByCharacterId(data, callback)
 }
 
+//check character id for error handling
 module.exports.character_idChecker = (req, res, next) => {
     const data = { character_id: req.params.character_id };
     const callback = (error, results, fields) => {
         if (error) {
-            res.status(500).send(
-                "Internal server error"
-            );
+            res.status(500).json({message:"Internal Server Error"})
         } else {
             if (results.length == 0) {
-                res.status(404).send(
-                    "Character is not found"
-                );
+                res.status(404).json({message:"Character is not found"})
             }
             else next();
         }
@@ -51,6 +50,7 @@ module.exports.character_idChecker = (req, res, next) => {
     model.character_idChecker(data, callback);
 }
 
+//show info about a character
 module.exports.getCharacterById = (req, res, next) => {
     const data = { character_id: req.params.character_id }
     const callback = (error, results, fields) => {
@@ -66,136 +66,43 @@ module.exports.getCharacterById = (req, res, next) => {
     model.getCharacterById(data, callback);
 }
 
+//show equipped items of a character
 module.exports.showEquippedItems = (req, res, next) => {
     const data = { character_id: req.params.character_id }
     const callback = (error, results, fields) => {
         if (error) {
-            res.status(500).send(
-                "Internal server error"
-            );
+            res.status(500).json({ message: "Internal server error" })
         } else {
             if (results.length == 0) {
-                res.status(404).send(
-                    "No equipped item found!"
-                );
+                res.status(404).json({ message: "No equipped item found!" })
             }
             else {
-                let nameList = [];
-                let text = "Your Equipped Items:\n";
-                for (x of results) {
-                    nameList.push(x.item_name)
-                }
-                for (let x = 0; x < nameList.length; x++) {
-                    text += `${x + 1}. ${nameList[x]}\n`
-                }
-                res.status(200).send(text)
+                res.status(200).send(results)
             };
         }
     }
     model.showEquippedItems(data, callback)
 }
 
+//show inventory of a character
 module.exports.showInventory = (req, res, next) => {
     const data = { character_id: req.params.character_id }
     const callback = (error, results, fields) => {
         if (error) {
-            res.status(500).send(
-                "Internal server error"
-            );
+            res.status(500).json({ message: "Internal server error" })
         } else {
             if (results.length == 0) {
-                res.status(404).send(
-                    "No item is found in your inventory"
-                );
+                res.status(404).json({ message: "No item is found in your inventory" })
             }
             else {
-                let nameList = [];
-                let rarityList = [];
-                let descriptionList = [];
-                let abilityList = [];
-                let idList = [];
-                let text = "Your Inventory:\n";
-                for (x of results) {
-                    nameList.push(x.item_name)
-                    rarityList.push(x.rarity)
-                    descriptionList.push(x.description)
-                    idList.push(x.item_id)
-                    if (x.special_effect_ability == null) { abilityList.push("-") }
-                    else abilityList.push(x.special_effect_ability)
-                }
-                for (let x = 0; x < nameList.length; x++) {
-                    text += `${x + 1}. ${nameList[x]} (${rarityList[x]}): ${descriptionList[x]}\nSpecial effect the item offer: ${abilityList[x]}\n Item Id- ${idList[x]}\n\n`
-                }
-                res.status(200).send(text)
+                res.status(200).json(results)
             };
         }
     }
     model.showInventory(data, callback)
 }
 
-module.exports.showCompletedQuest = (req, res, next) => {
-    const data = { character_id: req.params.character_id }
-    const callback = (error, results, fields) => {
-        if (error) {
-            res.status(500).send(
-                "Internal server error"
-            );
-        } else {
-            if (results.length == 0) {
-                res.status(404).send("\"There's no quest you have completed\""
-                );
-            }
-            else {
-                let nameList = [];
-                let lvlList = [];
-                let goldList = [];
-                let itemList = [];
-                let text = "The Quest You Have Completed:\n";
-                for (x of results) {
-                    nameList.push(x.title)
-                    lvlList.push(x.reward_level)
-                    goldList.push(x.reward_gold)
-                    itemList.push(x.reward_item)
-                }
-                for (let x = 0; x < nameList.length; x++) {
-                    text += `(${x + 1})\n Title: ${nameList[x]}\nRewards obtained: {Level: ${lvlList[x]}, Gold: ${goldList[x]}, Item: ${itemList[x]}}\n\n`
-                }
-                res.status(200).send(text)
-            }
-        }
-    }
-    model.showCompletedQuest(data, callback)
-}
-module.exports.checkuserIdAndPoints = (req, res, next) => {
-    if (!req.body.character_name || !req.body.user_id) {
-        res.status(400).send(
-            "Missing character name or User Id"
-        );
-        return;
-    }
-    const data = { character_name: req.body.character_name, user_id: req.body.user_id };
-    const callback = (error, results, fields) => {
-        if (error) {
-            res.status(500).send(
-                "Internal server error"
-            );
-        } else {
-            if (results[0].length == 0) {
-                res.status(404).send("User Id not found")
-            }
-            else if (!results[1][0].total_points) {
-                res.status(403).send("User has only zero point so you can't participate in this RPG!\n Do at least one task to earn points and enjoy this RPG ")
-
-            }
-            else {
-                next()
-            }
-
-        }
-    }
-    model.checkuserIdAndPoints(data, callback)
-}
-
+//login
 module.exports.login = (req, res, next) => {
     if (!req.body.character_name || !req.body.password) {
         res.status(404).json({ message: "Character name or password is not provided." })
@@ -207,7 +114,6 @@ module.exports.login = (req, res, next) => {
 
     const callback = (error, results, fields) => {
         if (error) {
-            console.error("Error login:", error);
             res.status(500).json(error);
         } else if (results.length == 0) {
             res.status(404).json({ message: 'Character is not found' });
@@ -220,9 +126,10 @@ module.exports.login = (req, res, next) => {
     model.loginModel(data, callback);
 };
 
+//check if character name or email is already used by other user
 module.exports.checkAlreadyExist = (req, res, next) => {
     if (req.body.character_name == undefined || req.body.email == undefined) {
-        res.status(400).send("Character Name or Email is missing!");
+        res.status(400).json({message:"Character Name or Email is missing!"});
         return;
     }
 
@@ -245,8 +152,9 @@ module.exports.checkAlreadyExist = (req, res, next) => {
     model.checkAlreadyExist(callback);
 
 }
-module.exports.createNewCharacter = (req, res, next) => {
 
+//create a new character
+module.exports.createNewCharacter = (req, res, next) => {
     const data = {
         hashed_pw: res.locals.hash,
         character_name: req.body.character_name,
@@ -289,7 +197,7 @@ module.exports.addItemsToNewCharacter = (req, res, next) => {
 }
 
 module.exports.addStatsToNewCharacter = (req, res, next) => {
-    const data = { attkdmg: res.locals.attkdmg, health: res.locals.health, character_id: res.locals.newCharacterId };
+    const data = { attkdmg: res.locals.attkdmg, health: res.locals.health, character_id: res.locals.character_id };
     const callback = (error, results, fields) => {
         if (error) {
             res.status(500).json({ message: "Internal server error" })
@@ -300,6 +208,7 @@ module.exports.addStatsToNewCharacter = (req, res, next) => {
     model.addStatsToNewCharacter(data, callback)
 }
 
+//register
 module.exports.register = (req, res, next) => {
     if (!req.body.password) {
         res.status(404).json({ message: 'Password is not defined.' })
@@ -323,6 +232,7 @@ module.exports.register = (req, res, next) => {
     model.registerModel(data, callback);
 };
 
+//check if name is used by other user
 module.exports.checkNameAlrExist = (req, res, next) => {
     if (!req.body.character_name) {
         res.status(400).json({ message: "Missing character name." })
@@ -347,6 +257,7 @@ module.exports.checkNameAlrExist = (req, res, next) => {
     model.checkNameAlrExist(data, callback)
 }
 
+//update name
 module.exports.updateCharacterName = (req, res, next) => {
     const data = {
         character_name: req.body.character_name,
@@ -364,17 +275,13 @@ module.exports.updateCharacterName = (req, res, next) => {
 
 module.exports.checkItemInInventory = (req, res, next) => {
     if (!req.body.item_id) {
-        res.status(400).send(
-            "Item Id is missing."
-        );
+        res.status(400).json({ message: "Item Id is missing." })
         return;
     }
     const data = { character_id: req.params.character_id };
     const callback = (error, results, fields) => {
         if (error) {
-            res.status(500).send(
-                "Internal server error"
-            );
+            res.status(500).json({ message: "Internal server error" })
         } else {
             let itemInInventory = false;
             for (x of results) {
@@ -385,20 +292,19 @@ module.exports.checkItemInInventory = (req, res, next) => {
             }
             if (itemInInventory) { next(); }
             else {
-                res.status(404).send("Item Id is invalid or You don't have that item.")
+                res.status(404).json({ message: "Item Id is invalid or You don't have that item." })
             }
         }
     }
     model.checkItemInInventory(data, callback)
 }
 
+//check if item is already equipped
 module.exports.checkAlreadyEquipped = (req, res, next) => {
     const data = { character_id: req.params.character_id, item_id: req.body.item_id }
     const callback = (error, results, fields) => {
         if (error) {
-            res.status(500).send(
-                "Internal server error"
-            );
+            res.status(500).json({ message: "Internal server error" })
         } else {
             let itemAlrEquipped = false;
             for (x of results[0]) {
@@ -408,9 +314,9 @@ module.exports.checkAlreadyEquipped = (req, res, next) => {
                 }
             }
             if (itemAlrEquipped) {
-                res.status(400).send(`
-                Item: ${results[1][0].item_name} is already equipped.
-                `)
+                res.status(400).json({
+                    message: `Item: ${results[1][0].item_name} is already equipped.
+                `})
             }
             else {
 
@@ -434,22 +340,17 @@ module.exports.checkAlreadyEquipped = (req, res, next) => {
     model.checkAlreadyEquipped(data, callback)
 }
 
+//equip
 module.exports.equipItem = (req, res, next) => {
     const data = { item_id: req.body.item_id, character_id: req.params.character_id, newItemDmg: res.locals.newItemDmg, newItemHealth: res.locals.newItemHealth };
     const callback = (error, results, fields) => {
         if (error) {
-            res.status(500).send(
-                "Internal server error"
-            );
+            res.status(500).json({ message: "Internal server error" })
         } else {
             if (results.affectedRows == 0) {
-                res.status(404).send(
-                    "Item Id is invaild"
-                );
+                res.status(404).json({ message: "Item Id is invaild" })
             }
-            else res.status(200).send(`
-            Item: ${results[1][0].item_name} is successfully equipped.
-            `)
+            else res.status(200).json({ message: `Item: ${results[1][0].item_name} is equipped.` })
         }
     }
     model.equipItem(data, callback);
@@ -457,23 +358,19 @@ module.exports.equipItem = (req, res, next) => {
 
 module.exports.unequipItem = (req, res, next) => {
     if (!req.body.item_id) {
-        res.status(400).send(
-            "Item Id is missing."
+        res.status(400).json({message:
+            "Item Id is missing."}
         );
         return;
     }
     const data = { character_id: req.params.character_id, item_id: req.body.item_id }
     const callback = (error, results, fields) => {
         if (error) {
-            res.status(500).send(
-                "Internal server error1"
-            );
+            res.status(500).json({ message: "Internal server error" })
         }
         else {
             if (results[0].affectedRows == 0) {
-                res.status(404).send(
-                    "Item Id is invaild or You don't have that item equipped."
-                );
+                res.status(404).json({ message: "Item Id is invaild or You don't have that item equipped." })
             }
             else {
                 if (!results[2][0].special_effect_attackDmg) {
@@ -499,13 +396,9 @@ module.exports.removeItemStatus = (req, res, next) => {
     const data = { removeItemDmg: res.locals.removeItemDmg, removeItemHealth: res.locals.removeItemHealth, character_id: req.params.character_id, item_id: req.body.item_id }
     const callback = (error, results, fields) => {
         if (error) {
-            res.status(500).send(
-                "Internal server error"
-            );
+            res.status(500).json({ message: "Internal server error" })
         } else {
-            res.status(200).send(`
-            Item:  is successfully unequipped.
-            `)
+            res.status(200).json({ message: `Item:  ${results[1][0].item_name}is unequipped.` })
         }
     }
     model.removeItemStatus(data, callback)

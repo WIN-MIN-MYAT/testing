@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
+    localStorage.removeItem("token");
+    localStorage.removeItem("characterId");
     const callback = (responseStatus, responseData) => {
+      
       console.log("responseStatus:", responseStatus);
       console.log("responseData:", responseData);
       if (responseStatus == 200) {

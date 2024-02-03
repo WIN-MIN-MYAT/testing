@@ -1,5 +1,6 @@
 const model = require("../models/messageModel")
 
+//create new message
 module.exports.createMessage = (req, res, next) => {
     if(req.body.message == undefined || req.body.message == "")
     {
@@ -8,7 +9,7 @@ module.exports.createMessage = (req, res, next) => {
     }
     else if(req.body.character_id == undefined)
     {
-        res.status(400).send("Error: character_id is undefined");
+        res.status(400).json({message:"Error: character_id is undefined"});
         return;
     }
 

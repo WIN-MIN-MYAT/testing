@@ -11,10 +11,11 @@ module.exports.questIdChecker=(data,callback)=>{
 
 module.exports.completedCharacters=(data,callback)=>{
     const SQLSTATEMENT=`
-    SELECT Character_progression.character_name,Quest_completed.completed_on
-    FROM Quest_completed
-    INNER JOIN Character_progression ON Character_progression.character_id=Quest_completed.character_id 
+    SELECT DISTINCT Character_progression.character_name, MAX(Quest_completed.completed_on) AS completed_on
+    FROM Character_progression
+    INNER JOIN Quest_completed ON Character_progression.character_id=Quest_completed.character_id 
     WHERE Quest_completed.quest_id=?
+    GROUP BY Character_progression.character_id,Character_progression.character_name,Quest_completed.quest_id
     ORDER BY completed_on;
     `
     const  VALUES=[data.quest_id]

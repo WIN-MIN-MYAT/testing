@@ -74,10 +74,21 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("responseStatus:", responseStatus);
     console.log("responseData:", responseData);
     respondText.classList.remove("d-none");  
-
+    if(responseStatus==401){
+      respondText.classList.remove("text-bg-success")
+      respondText.classList.remove("text-bg-danger")
+      respondText.classList.add("text-bg-warning")
+      respondText.innerText = "Your token is expired.Please login back."
+      setTimeout(() => {
+        respondText.classList.add("d-none");  // Hide the element after 2 second
+        window.location.href="login.html"
+      }, 4000);
+      return
+    }
     if (responseStatus == 201) {
       respondText.classList.add("text-bg-success")
       respondText.classList.remove("text-bg-danger")
+      respondText.classList.remove("text-bg-warning")
       respondText.innerText = "✅ Character Name Updated Successfully";
       fetchMethod(currentUrl + `/api/characters/${characterId}`, callbackForcharacterInfo);
       fetchMethod(currentUrl + `/api/characters/${characterId}/quest`, questLinkcallback);
@@ -86,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 2000);
     } else {
       respondText.classList.remove("text-bg-success")
+      respondText.classList.remove("text-bg-warning")
       respondText.classList.add("text-bg-danger")
       respondText.innerText = `❌ ${responseData.message}`;
       setTimeout(() => {

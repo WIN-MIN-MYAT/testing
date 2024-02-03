@@ -30,9 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
         <th scope="row" class="text-center">${displayRank}</th>
         <td class="fw-bold text-capitalize ">${character.character_name}</td>
         <td class="text-center">${character.level}</td>
-        <td >
-        <img src="../assets/dollar.png" alt="Icon" width="20" height="20" class="mr-2">
-        ${character.gold}</td>
+        <td class="text-end">
+        
+        ${character.gold}<img src="../assets/dollar.png" alt="Icon" width="20" height="20" class="mr-2"></td>
           `;
         characterList.appendChild(displayItem);
         rank++
