@@ -25,6 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     const callback = async(responseStatus, responseData) => {
+        if(responseStatus==401){
+            localStorage.removeItem("token");
+            localStorage.removeItem("characterId");
+            window.alert("Your token is expired,please log in again!")
+            window.location.href="login.html"
+        }
         console.log("responseStatus:", responseStatus);
         console.log("responseData:", responseData);
         responseData.forEach((item) => {
@@ -80,6 +86,12 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
     const callbackForCurrentStats=(responseStatus,responseData)=>{
+    if(responseStatus==401){
+        window.alert("Your token is expired,please log in again!")
+        localStorage.removeItem("token");
+        localStorage.removeItem("characterId");
+        window.location.href="login.html"
+    }
         let character_name=document.getElementById("character_name")
         character_name.innerText=responseData.character_name
         let hp=document.getElementById("hp")
@@ -89,6 +101,12 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("dmg:"+responseData.dmg)
     }
     const callbackForEquippedItems=(responseStatus,responseData)=>{
+        if(responseStatus==401){
+            window.alert("Your token is expired,please log in again!")
+            localStorage.removeItem("token");
+            localStorage.removeItem("characterId");
+            window.location.href="login.html"
+        }
         resetEquippedItemList()
         console.log(responseData)
         responseData.forEach((items)=>{

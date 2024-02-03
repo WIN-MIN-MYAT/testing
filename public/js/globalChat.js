@@ -91,7 +91,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const callbackForSubmit = (responseStatus, responseData) => {
         console.log("responseStatus:", responseStatus);
         console.log("responseData:", responseData);
-
+        if(responseStatus==401){
+          window.alert("Your token is expired,please log in again!")
+          localStorage.removeItem("token");
+          localStorage.removeItem("characterId");
+          window.location.href="login.html"
+      }
         // After sending a new message, fetch and display messages again
         resetMessageList();
         fetchMethod(currentUrl + "/api/messages", callback);

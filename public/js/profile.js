@@ -75,6 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("responseData:", responseData);
     respondText.classList.remove("d-none");  
     if(responseStatus==401){
+      localStorage.removeItem("token");
+      localStorage.removeItem("characterId");
       respondText.classList.remove("text-bg-success")
       respondText.classList.remove("text-bg-danger")
       respondText.classList.add("text-bg-warning")
